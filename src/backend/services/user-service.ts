@@ -1,7 +1,7 @@
 import { Document } from "mongoose";
 import connectDB from "../database/connection/connection";
 import User from "../database/models/User";
-import IUser from "../types/User";
+import IUser from "../types/IUser";
 
 const users: IUser[] = [];
 class UserService {
@@ -10,9 +10,11 @@ class UserService {
   async createUser(user: IUser) {
     //here will be the code from the database
     const db = await connectDB();
-    const createduser = await User.create(user);
+    const newUser = new User(user);
+    const createdUser = await newUser.save();
+    console.log("we will disconnect");
     await db.disconnect();
-    return createduser;
+    return createdUser;
   }
   async getUserById(userId: string): Promise<IUser | Document> {
     // const user = users.find((user) => user.id === userId);
