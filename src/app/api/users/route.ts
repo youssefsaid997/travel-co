@@ -1,5 +1,5 @@
 import userService from "@/backend/services/user-service";
-import User from "@/backend/types/User";
+import User from "@/backend/types/IUser";
 import userSchema from "@/backend/validation/User-validation";
 import { error } from "console";
 import Joi from "joi";
