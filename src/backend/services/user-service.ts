@@ -27,6 +27,8 @@ class UserService {
     return user;
   }
   async getUsers() {
+    const db = await connectDB();
+    const users = await User.find({});
     return users;
   }
   async updateUserById(id: string, user: IUser) {}

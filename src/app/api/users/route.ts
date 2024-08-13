@@ -1,15 +1,13 @@
 import userService from "@/backend/services/user-service";
 import User from "@/backend/types/IUser";
 import userSchema from "@/backend/validation/User-validation";
-import { error } from "console";
-import Joi from "joi";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(request: NextRequest) {
   const users = await userService.getUsers();
   return NextResponse.json({
     message: "people retrived successfully",
-    data: users,
+    users,
   });
 }
 export async function POST(request: NextRequest) {
