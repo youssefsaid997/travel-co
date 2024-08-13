@@ -1,13 +1,13 @@
-"use client";
-import React, { useEffect, useState } from "react";
+import Card from "@/frontend/components/shared/Card";
+import useUsers from "@/frontend/hooks/useUsers";
+import UsersList from "@/frontend/pages/UsersList";
 
 function PeoplePage() {
-  const [val, setVal] = useState(0);
-
-  useEffect(() => {
-    setVal(1);
-  }, [val]);
-  return <div>{val}</div>;
+  return (
+    <>
+      <UsersList />
+    </>
+  );
 }
 
 export default PeoplePage;
