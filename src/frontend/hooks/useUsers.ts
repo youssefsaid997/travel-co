@@ -2,7 +2,7 @@
 
 import IUser from "@/backend/types/IUser";
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 function useUsers() {
   const [users, setUsers] = useState<IUser[]>([]);
 
@@ -11,8 +11,8 @@ function useUsers() {
     if (response) setUsers(response.data.users);
   }
   useEffect(() => {
-    if (!users.length) getUsers();
-  }, [users.length]);
+    getUsers();
+  }, []);
 
   return {
     users,

@@ -1,6 +1,7 @@
 import userService from "@/backend/services/user-service";
 import User from "@/backend/types/IUser";
 import userSchema from "@/backend/validation/User-validation";
+import { ApiError } from "next/dist/server/api-utils";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(request: NextRequest) {
@@ -31,9 +32,11 @@ export async function POST(request: NextRequest) {
       { status: 201 }
     );
   } catch (error) {
-    if (error instanceof Error) {
-      error.message;
-      return NextResponse.json({ error: error.message }, { status: 400 });
-    }
+    const err = error as ApiError;
+
+    return NextResponse.json(
+      { error: err.message },
+      { status: err.statusCode }
+    );
   }
 }
