@@ -6,7 +6,6 @@ type CardProps = {
   user: IUser;
 };
 function Card({ user }: CardProps) {
-  console.log(user);
   return (
     <div className="max-w-sm rounded overflow-hidden shadow-lg">
       <img className="w-full" src="" alt="Sunset in the mountains" />

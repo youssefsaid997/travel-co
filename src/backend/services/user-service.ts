@@ -1,5 +1,5 @@
 import { Document } from "mongoose";
-import connectDB from "../database/connection/connection";
+import { connectDB, disconnectDB } from "../database/connection/connection";
 import User from "../database/models/User";
 import IUser from "../types/IUser";
 
@@ -9,26 +9,27 @@ class UserService {
 
   async createUser(user: IUser) {
     //here will be the code from the database
-    const db = await connectDB();
+    await connectDB();
     const newUser = new User(user);
     const createdUser = await newUser.save();
-    console.log("we will disconnect");
-    await db.disconnect();
+    await disconnectDB();
     return createdUser;
   }
   async getUserById(userId: string): Promise<IUser | Document> {
     // const user = users.find((user) => user.id === userId);
-    const db = await connectDB();
+    await connectDB();
     const user = await User.findById(userId);
-    await db.disconnect();
+    // await db.disconnectDB();
     if (!user) {
       throw new Error("User doesnt exist!");
     }
+    await disconnectDB();
     return user;
   }
   async getUsers() {
-    const db = await connectDB();
+    await connectDB();
     const users = await User.find({});
+    await disconnectDB();
     return users;
   }
   async updateUserById(id: string, user: IUser) {}

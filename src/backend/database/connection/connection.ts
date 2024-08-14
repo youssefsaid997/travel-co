@@ -1,13 +1,16 @@
 import mongoose from "mongoose";
 
 const connectDB = async () => {
-  mongoose
+  const db = await mongoose
     .connect("mongodb://127.0.0.1:27017/travelco")
-    .then((mongoose) => {
-      console.log("connected to DB successfully");
-    })
     .catch(() => console.log("there is problem in connection..."));
-  return mongoose;
+  console.log("connected to DB successfully");
+  // console.log(mongoose.connection);
+  return mongoose.connection;
 };
 
-export default connectDB;
+const disconnectDB = async () => {
+  const db = await mongoose.connection.close();
+  console.log("disconnect from database");
+};
+export { connectDB, disconnectDB };
