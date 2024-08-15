@@ -2,7 +2,7 @@ import IUser from "../types/IUser";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import User from "../database/models/User";
-import connectDB from "../database/connection/connection";
+import { connectDB, disconnectDB } from "../database/connection/connection";
 import { ApiError } from "next/dist/server/api-utils";
 
 // TODO : Custome Error Class to specify the message and status code
@@ -22,8 +22,10 @@ class AuthService {
     if (!user.email || !user.password) {
       throw new ApiError(400, "Please check your inputs");
     }
-    const db = await connectDB();
+
+    await connectDB();
     const loggedInUser = await User.findOne({ email: user.email });
+    await disconnectDB();
 
     if (!loggedInUser) {
       throw new ApiError(400, "Please create an account , User not found!");
@@ -42,7 +44,6 @@ class AuthService {
       };
       const KEY = process.env.JWT_SECRET || "";
       const token = jwt.sign(payload, KEY);
-      //   await db.disconnect();
 
       return token;
     }
